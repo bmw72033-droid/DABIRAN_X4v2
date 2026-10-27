@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0f14">
+<title>DABIRAN X4 · سامانه جامع دبیران</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f14; --bg2:#0f151d; --card:#141c26; --card2:#1a2431;
+  --line:#243040; --fg:#e8eef6; --muted:#8fa1b6; --accent:#4f9dff; --accent2:#6ee7b7;
+  --danger:#ff7a7a; --warn:#ffcc66; --good:#5eead4; --radius:16px;
+  --shadow:0 10px 30px rgba(0,0,0,.35); --font:'Vazirmatn',Tahoma,sans-serif;
+}
+body.light{
+  --bg:#f5f7fb; --bg2:#eef2f8; --card:#ffffff; --card2:#f7f9fc;
+  --line:#dde5ef; --fg:#16202c; --muted:#5b6b7d; --accent:#2563eb; --accent2:#0ea472;
+  --danger:#c0392b; --warn:#b7791f; --good:#0f766e; --shadow:0 10px 30px rgba(20,40,80,.08);
+}
+*{box-sizing:border-box}
+html{font-size:15px}
+body{margin:0;background:radial-gradient(1200px 600px at 100% -10%,var(--bg2),var(--bg));color:var(--fg);font-family:var(--font);min-height:100vh}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent);text-decoration:none}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:22px;margin-bottom:6px}
+h2{font-size:18px;margin-bottom:12px}
+h3{font-size:15px;margin-bottom:6px}
+small,.muted{color:var(--muted)}
+.shell{max-width:1180px;margin:0 auto;padding:18px 16px 80px}
+.topbar{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-weight:800;color:#06101c;box-shadow:var(--shadow)}
+.brand b{font-size:16px}
+.brand small{display:block;font-size:11px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:700;min-height:44px;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--card2);color:var(--fg);border:1px solid var(--line)}
+.btn.danger{background:var(--danger);color:#1a0b0b}
+.btn.tiny{min-height:34px;font-size:12px;padding:6px 10px;border-radius:10px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;padding:12px 13px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;outline:none;min-height:48px}
+.field textarea{min-height:150px;resize:vertical;line-height:2}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,157,255,.18)}
+.pin{text-align:center;direction:ltr;font-size:26px!important;font-weight:800;letter-spacing:6px}
+.login{max-width:400px;margin:8vh auto 0}
+.login .card{padding:24px}
+.hint{font-size:12px;color:var(--muted);line-height:1.9}
+.grid{display:grid;gap:12px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tile{display:flex;flex-direction:column;gap:6px;text-align:right;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;color:var(--fg);transition:.15s;min-height:100px}
+.tile:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tile b{font-size:14px}
+.tile .count{margin-top:auto;align-self:flex-start;background:var(--accent);color:#fff;border-radius:20px;padding:2px 9px;font-size:12px;font-weight:800}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;color:var(--muted)}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input,.toolbar select{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:42px}
+.toolbar input{flex:1;min-width:180px}
+.notice{padding:12px 14px;border-radius:12px;background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.35);color:var(--good);font-size:13px;margin-bottom:12px}
+.notice.error{background:rgba(255,122,122,.12);border-color:rgba(255,122,122,.4);color:var(--danger)}
+.empty{text-align:center;padding:40px 16px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
+.msg{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:.15s}
+.msg.unread{border-right:4px solid var(--accent)}
+.msg-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.msg-body{white-space:pre-wrap;line-height:2;font-size:14px;margin:12px 0;color:var(--fg)}
+.meta{font-size:11.5px;color:var(--muted);line-height:1.9}
+.chip{display:inline-block;border-radius:8px;padding:3px 8px;background:var(--card2);font-size:11px;border:1px solid var(--line);white-space:nowrap}
+.chip.good{color:var(--good);border-color:rgba(94,234,212,.4)}
+.chip.warn{color:var(--warn);border-color:rgba(255,204,102,.4)}
+.chip.danger{color:var(--danger);border-color:rgba(255,122,122,.4)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.kv:last-child{border:0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.stat .num{font-size:24px;font-weight:800;color:var(--accent)}
+.stat .lbl{font-size:12px;color:var(--muted)}
+.progress{height:8px;border-radius:20px;background:var(--card2);overflow:hidden;margin-top:8px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.timeline{list-style:none;padding:0;margin:10px 0 0}
+.timeline li{position:relative;padding-right:18px;font-size:12px;color:var(--muted);line-height:1.9}
+.timeline li::before{content:'';position:absolute;right:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.skeleton{height:14px;border-radius:8px;background:linear-gradient(90deg,var(--card2),var(--card),var(--card2));background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:13px;box-shadow:var(--shadow);z-index:50;max-width:90vw}
+.toast.err{border-color:var(--danger);color:var(--danger)}
+.fab{position:fixed;bottom:20px;left:20px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;border:0;font-size:24px;box-shadow:var(--shadow);z-index:40}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:60;padding:16px}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:18px;max-width:520px;width:100%;padding:20px;max-height:90vh;overflow:auto}
+@media(min-width:860px){.grid.two{grid-template-columns:repeat(2,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.grid.two,.grid.three{grid-template-columns:1fr}.topbar{flex-wrap:wrap}.brand b{font-size:14px}}
+</style>
+</head>
+<body>
+<main class="shell" id="app" aria-live="polite">
+  <div class="login"><div class="card"><h1>DABIRAN X4</h1><p class="hint">در حال بارگذاری…</p></div></div>
+</main>
+<div id="toast" hidden></div>
+<div id="modal-root"></div>
+
+<script>
+'use strict';
+
+/* ========== CONFIG ========== */
+const CONFIG = {
+  DB: 'https://bymxyxxzhhbjetgymnqt.supabase.co',
+  KEY: 'sb_publishable_z1oXEjxfaSyj9Ib13NkrMQ_4mzZopow',
+  BUCKET: 'dabiran_attachments',
+  VERSION: 'DABIRAN X4 · 2026-10-27',
+  POLL_MS: 15000,
+  MAX_FILE: 25 * 1024 * 1024,
+  DEPTS: ['میلیتاریسم','تاریخ','جامعه‌شناسی','اقتصاد','فلسفه','فرهنگ','حقوق','مطالبات ملی']
+};
+
+/* ========== UTIL ========== */
+const app = document.getElementById('app');
+const toastEl = document.getElementById('toast');
+const modalRoot = document.getElementById('modal-root');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const faNum = s => String(s).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+const enNum = s => String(s).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const stamp = s => s ? new Date(s).toLocaleString('fa-IR',{dateStyle:'short',timeStyle:'short'}) : '';
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+const delay = ms => new Promise(r => setTimeout(r, ms));
+
+function validUrl(text){
+  try { const u = new URL(text); return ['https:','http:'].includes(u.protocol) ? u.href : null; }
+  catch { return null; }
+}
+function safeLink(url, label){
+  const href = validUrl(url);
+  return href ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label ?? href)}</a>` : '';
+}
+
+/* ========== ORG MODEL ========== */
+const BASE = i => 3 + 12 * i;
+function who(code){
+  code = Number(code);
+  if (!Number.isInteger(code) || code < 1 || code > 98) return null;
+  if (code === 1) return { code, role:'president', label:'رئیس پژوهشکده', dept:'مرکزی' };
+  if (code === 2) return { code, role:'pr', label:'مدیریت روابط عمومی', dept:'مرکزی' };
+  const group = Math.floor((code - 3) / 12);
+  const offset = (code - 3) % 12;
+  const role = offset === 0 ? 'secretary' : offset === 1 ? 'deputy' : 'member';
+  const label = offset === 0 ? 'دبیر' : offset === 1 ? 'معاون' : 'عضو ' + (offset - 1);
+  return { code, group, offset, role, label, dept: CONFIG.DEPTS[group] };
+}
+const name = code => { const u = who(code); return u ? `${u.dept} · ${u.label} (${u.code})` : `واحد ${code}`; };
+
+/* ========== HTTP ========== */
+class ApiError extends Error {
+  constructor(message, status, code){ super(message); this.status = status; this.code = code; }
+}
+async function http(path, options = {}){
+  const url = new URL(CONFIG.DB + path);
+  for (const [k, v] of Object.entries(options.params || {})) url.searchParams.set(k, String(v));
+  let res;
+  try {
+    res = await fetch(url, {
+      method: options.method || 'GET',
+      headers: {
+        apikey: CONFIG.KEY,
+        ...(options.data !== undefined ? { 'Content-Type': 'application/json' } : {}),
+        ...(options.headers || {})
+      },
+      body: options.data === undefined ? undefined : JSON.stringify(options.data),
+      cache: 'no-store'
+    });
+  } catch (e) {
+    throw new ApiError('ارتباط با سرور برقرار نشد: ' + e.message, 0, 'NETWORK');
+  }
+  const raw = await res.text();
+  let data; try { data = raw ? JSON.parse(raw) : null; } catch { data = raw; }
+  if (!res.ok){
+    const msg = (data && typeof data === 'object' && (data.message || data.error || data.hint)) || raw || res.statusText;
+    throw new ApiError(`HTTP ${res.status}: ${msg}`, res.status, data?.code);
+  }
+  return data;
+}
+const get    = (t, p)    => http('/rest/v1/' + t, { params: p });
+const insert = (t, d)    => http('/rest/v1/' + t, { method:'POST',  data:d, headers:{ Prefer:'return=representation' }});
+const patch  = (t, p, d)=> http('/rest/v1/' + t, { method:'PATCH', params:p, data:d, headers:{ Prefer:'return=representation' }});
+
+async function fetchAll(table, params){
+  const all = []; const step = 500; let offset = 0;
+  for (let i = 0; i < 30; i++){
+    const chunk = await get(table, { ...params, limit: step, offset });
+    if (!Array.isArray(chunk)) throw new ApiError(`فرمت پاسخ ${table} نامعتبر است`, 0, 'FORMAT');
+    all.push(...chunk);
+    if (chunk.length < step) break;
+    offset += step;
+  }
+  return all;
+}
+
+/* ========== STATE ========== */
+const state = {
+  me: null,
+  page: 'home',
+  kind: 'directive',
+  box: 'inbox',          // inbox | sent | forwarded
+  messages: [],
+  projects: [],
+  forward: null,
+  filter: { dept:'all', search:'', status:'all' },
+  error: '', success: '',
+  busy: false,
+  poll: null,
+  theme: localStorage.getItem('dx4_theme') || 'dark',
+  sidebar: false
+};
+
+/* ========== UI HELPERS ========== */
+function toast(msg, isErr = false){
+  if (!msg) return;
+  toastEl.textContent = msg;
+  toastEl.className = 'toast' + (isErr ? ' err' : '');
+  toastEl.hidden = false;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toastEl.hidden = true; }, 4200);
+}
+function notice(){ return state.error ? `<div class="notice error" role="alert">${esc(state.error)}</div>` : state.success ? `<div class="notice" role="status">${esc(state.success)}</div>` : ''; }
+function setMsg(text, isErr = false){
+  state.error = isErr ? text : '';
+  state.success = isErr ? '' : text;
+  if (text) toast(text, isErr);
+}
+function applyTheme(){
+  document.body.classList.toggle('light', state.theme === 'light');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', state.theme === 'light' ? '#f5f7fb' : '#0b0f14');
+}
+function toggleTheme(){
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  localStorage.setItem('dx4_theme', state.theme);
+  applyTheme();
+}
+
+/* ========== AUTH (local session + optional server PIN) ========== */
+const SESSION_KEY = 'dx4_session';
+function saveSession(me){ localStorage.setItem(SESSION_KEY, JSON.stringify({ code: me.code, at: Date.now() })); }
+function loadSession(){
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (!s.code || Date.now() - s.at > 1000 * 60 * 60 * 24 * 7) return null;
+    return who(s.code);
+  } catch { return null; }
+}
+function clearSession(){ localStorage.removeItem(SESSION_KEY); }
+
+/* اگر جدول users با ستون pin_hash در Supabase داری، اینجا می‌توانی PIN را اعتبارسنجی کنی.
+   به‌صورت پیش‌فرض: کد ۱..۹۸ بدون PIN پذیرفته می‌شود تا سازگاری حفظ شود. */
+async function authenticate(code, pin){
+  const me = who(code);
+  if (!me) throw new Error('کد واحد باید بین ۱ تا ۹۸ باشد.');
+  // TODO: در صورت وجود جدول users:
+  // const rows = await get('users', { select:'id,pin_hash,role', code:'eq.'+code, limit:1 });
+  // if (!rows.length || !(await verifyPin(pin, rows[0].pin_hash))) throw new Error('PIN نادرست است.');
+  if (pin && !/^\d{4,8}$/.test(pin)) throw new Error('PIN باید ۴ تا ۸ رقم باشد.');
+  return me;
+}
+
+/* ========== DATA LOAD ========== */
+async function loadMessages(){
+  const me = state.me;
+  const selection = 'id,sender_code,receiver_code,kind,title,body,links,attachments,created_at,read_at,parent_id';
+  let received;
+  if (me.role === 'president') received = await fetchAll('messages', { select: selection, order:'created_at.desc' });
+  else {
+    const receivers = me.role === 'secretary' ? `in.(${me.code},${me.code + 1})` : `eq.${me.code}`;
+    received = await fetchAll('messages', { select: selection, receiver_code: receivers, order:'created_at.desc' });
+  }
+  const sent = await fetchAll('messages', { select: selection, sender_code:'eq.' + me.code, order:'created_at.desc' });
+  const map = new Map();
+  [...received, ...sent].forEach(m => map.set(m.id, m));
+  state.messages = [...map.values()].sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+}
+async function loadProjects(){
+  if (state.me.role === 'president' || state.me.role === 'pr')
+    state.projects = await fetchAll('projects', { select:'*', order:'created_at.desc' });
+  else
+    state.projects = await fetchAll('projects', { select:'*', or:`(assigned_to.eq.${state.me.code},created_by.eq.${state.me.code})`, order:'created_at.desc' });
+}
+async function loadAll(announce){
+  try {
+    await Promise.all([loadMessages(), loadProjects()]);
+    state.error = '';
+    if (announce) setMsg('همگام‌سازی انجام شد.');
+  } catch (e){
+    setMsg('خطا در بارگذاری: ' + (e.message || e), true);
+  }
+  render();
+}
+
+/* ========== FILTERS ========== */
+function accessibleMessages(){
+  const me = state.me;
+  if (me.role === 'president') return state.messages;
+  if (me.role === 'secretary') return state.messages.filter(m => m.receiver_code === me.code || m.receiver_code === me.code + 1 || m.sender_code === me.code);
+  return state.messages.filter(m => m.receiver_code === me.code || m.sender_code === me.code);
+}
+function filteredMessages(){
+  let items = accessibleMessages();
+  if (state.box === 'inbox') items = items.filter(m => m.receiver_code === state.me.code);
+  if (state.box === 'sent') items = items.filter(m => m.sender_code === state.me.code);
+  if (state.box === 'forwarded') items = items.filter(m => m.parent_id);
+  if (state.kind !== 'all') items = items.filter(m => m.kind === state.kind);
+  if (state.filter.dept !== 'all'){
+    const b = BASE(Number(state.filter.dept));
+    items = items.filter(m => [m.sender_code, m.receiver_code].some(n => n >= b && n <= b + 11));
+  }
+  if (state.filter.search.trim()){
+    const q = state.filter.search.toLowerCase();
+    items = items.filter(m => [m.title, m.body, name(m.sender_code), name(m.receiver_code)].join(' ').toLowerCase().includes(q));
+  }
+  return items;
+}
+
+/* ========== VIEWS ========== */
+function loginView(){
+  return `<div class="login">
+    <div class="card">
+      <div class="brand" style="margin-bottom:16px">
+        <div class="logo">X4</div>
+        <div><b>DABIRAN X4</b><small>سامانه جامع دبیران</small></div>
+      </div>
+      ${notice()}
+      <form id="login-form">
+        <div class="field"><label for="pin">کد واحد (۱ تا ۹۸)</label>
+          <input id="pin" class="pin" name="code" inputmode="numeric" maxlength="3" placeholder="۱..۹۸" required autofocus aria-label="کد واحد">
+        </div>
+        <div class="field"><label for="userpin">PIN شخصی (اختیاری)</label>
+          <input id="userpin" class="pin" name="pin" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="PIN">
+        </div>
+        <button class="btn block" type="submit">ورود</button>
+      </form>
+      <p class="hint" style="margin-top:14px">اگر PIN برای واحد شما تعریف نشده، خالی بگذارید.</p>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:14px">${esc(CONFIG.VERSION)}</p>
+  </div>`;
+}
+
+function homeView(){
+  const me = state.me;
+  const unread = state.messages.filter(m => m.receiver_code === me.code && !m.read_at).length;
+  const headers = `<div class="topbar">
+    <div class="brand"><div class="logo">X4</div><div><b>${esc(me.role === 'president' ? 'ریاست پژوهشکده' : me.role === 'pr' ? 'روابط عمومی' : 'دبیرخانه ' + me.dept)}</b><small>${esc(me.label)} · کد ${faNum(me.code)}</small></div></div>
+    <div class="bar">
+      <button class="btn ghost tiny" data-action="theme" title="تغییر تم">${state.theme === 'light' ? '🌙' : '☀️'}</button>
+      <button class="btn ghost tiny" data-action="refresh">↻ همگام‌سازی</button>
+      <button class="btn ghost tiny" data-action="exit">خروج</button>
+    </div>
+  </div>`;
+  const stats = `<div class="grid three" style="margin-bottom:14px">
+    <div class="stat"><div class="num">${faNum(unread)}</div><div class="lbl">پیام خوانده‌نشده</div></div>
+    <div class="stat"><div class="num">${faNum(state.messages.filter(m => m.sender_code === me.code).length)}</div><div class="lbl">ارسالی شما</div></div>
+    <div class="stat"><div class="num">${faNum(state.projects.filter(p => p.status !== 'تکمیل شده').length)}</div><div class="lbl">پروژه فعال</div></div>
+  </div>`;
+  const tiles = `<div class="grid two">
+    <button class="tile" data-action="box" data-box="inbox"><b>📥 صندوق ورودی</b><small>ابلاغیه‌ها و گزارش‌های دریافتی</small>${unread ? `<span class="count">${faNum(unread)}</span>` : ''}</button>
+    <button class="tile" data-action="box" data-box="sent"><b>📤 ارسالی‌ها</b><small>پیام‌های ارسال‌شده توسط شما</small></button>
+    <button class="tile" data-action="compose" data-kind="report"><b>✍️ نوشتن گزارش</b><small>ارسال گزارش به سطح بالاتر</small></button>
+    <button class="tile" data-action="compose" data-kind="directive"><b>📢 صدور ابلاغیه</b><small>ارسال دستور به زیرمجموعه</small></button>
+    <button class="tile" data-action="projects"><b>🗂 پروژه‌ها</b><small>مدیریت پروژه‌های پژوهشکده</small></button>
+    <button class="tile" data-action="units"><b>🏛 ساختار سازمان</b><small>مشاهده ۹۸ جایگاه و نقش‌ها</small></button>
+  </div>`;
+  return headers + notice() + stats + tiles + `<div style="margin-top:18px">${messagesView(true)}</div>`;
+}
+
+function messagesView(compact = false){
+  const me = state.me;
+  const items = filteredMessages();
+  const unreadBadge = n => n ? ` <span class="chip warn">${faNum(n)}</span>` : '';
+  const inboxCount = accessibleMessages().filter(m => m.receiver_code === me.code && !m.read_at).length;
+  const tabs = compact ? '' : `<div class="tabs">
+    <button class="tab ${state.box==='inbox'?'active':''}" data-action="box" data-box="inbox">ورودی${unreadBadge(inboxCount)}</button>
+    <button class="tab ${state.box==='sent'?'active':''}" data-action="box" data-box="sent">ارسالی</button>
+    <button class="tab ${state.box==='forwarded'?'active':''}" data-action="box" data-box="forwarded">ارجاعی</button>
+  </div>`;
+  const filterBar = `<div class="toolbar">
+    <input placeholder="جستجو در عنوان، متن یا واحد…" data-filter="search" value="${esc(state.filter.search)}" aria-label="جستجو">
+    <select data-filter="kind" aria-label="نوع پیام">
+      <option value="all" ${state.kind==='all'?'selected':''}>همه انواع</option>
+      <option value="directive" ${state.kind==='directive'?'selected':''}>ابلاغیه</option>
+      <option value="report" ${state.kind==='report'?'selected':''}>گزارش</option>
+    </select>
+    <select data-filter="dept" aria-label="دبیرخانه">
+      <option value="all">همه دبیرخانه‌ها</option>
+      ${CONFIG.DEPTS.map((d,i)=>`<option value="${i}" ${state.filter.dept===String(i)?'selected':''}>${esc(d)}</option>`).join('')}
+    </select>
+  </div>`;
+  return tabs + filterBar + (items.length ? items.map(m => messageCard(m)).join('') : `<div class="empty">هیچ پیامی در این نما پیدا نشد.</div>`);
+}
+
+function messageCard(m){
+  const me = state.me;
+  const canMark = m.receiver_code === me.code && !m.read_at;
+  const nextTarget = me.role === 'deputy' ? BASE(me.group) : me.role === 'secretary' ? 2 : me.role === 'pr' ? 1 : null;
+  const canForward = m.kind === 'report' && nextTarget && (
+    (me.role === 'deputy'  && m.sender_code >= BASE(me.group) + 2 && m.sender_code <= BASE(me.group) + 11) ||
+    (me.role === 'secretary'&& m.sender_code >= BASE(me.group) + 1 && m.sender_code <= BASE(me.group) + 11) ||
+    (me.role === 'pr'      && m.sender_code >= 3 && (m.sender_code - 3) % 12 === 0)
+  );
+  const kindChip = m.kind === 'report' ? '<span class="chip good">گزارش</span>' : '<span class="chip">ابلاغیه</span>';
+  const readChip = m.read_at ? '<span class="chip good">خوانده‌شده</span>' : '<span class="chip warn">جدید</span>';
+  return `<article class="msg ${!m.read_at && m.receiver_code===me.code ? 'unread' : ''}" data-id="${m.id}">
+    <div class="msg-head">
+      <div>
+        <h3>${esc(m.title || 'بدون عنوان')}</h3>
+        <div class="meta">از: ${esc(name(m.sender_code))}<br>به: ${esc(name(m.receiver_code))}<br>${esc(stamp(m.created_at))}${m.parent_id ? ' · ارجاع از #' + esc(m.parent_id) : ''}</div>
+      </div>
+      <div class="bar">${kindChip}${readChip}</div>
+    </div>
+    <div class="msg-body">${esc(m.body)}</div>
+    ${(m.links||[]).length ? `<div class="meta">${m.links.map(u => safeLink(u)).join('<br>')}</div>` : ''}
+    ${(m.attachments||[]).length ? `<div class="meta">${m.attachments.map((p,i) => safeLink(fileUrl(p), `📎 فایل ${faNum(i+1)}`)).join(' · ')}</div>` : ''}
+    <div class="actions">
+      ${canMark ? `<button class="btn tiny" data-action="read" data-id="${m.id}">تأیید دریافت</button>` : ''}
+      ${canForward ? `<button class="btn ghost tiny" data-action="forward" data-id="${m.id}">ارجاع به ${me.role==='deputy'?'دبیر':me.role==='secretary'?'روابط عمومی':'رئیس'}</button>` : ''}
+    </div>
+  </article>`;
+}
+
+function fileUrl(path){
+  if (typeof path !== 'string') return '';
+  if (path.startsWith('sb://')) path = path.slice(5);
+  if (validUrl(path)) return path;
+  return CONFIG.DB + '/storage/v1/object/public/' + CONFIG.BUCKET + '/' + path.split('/').map(encodeURIComponent).join('/');
+}
+
+function availableTargets(kind){
+  const u = state.me;
+  if (kind === 'report'){
+    if (u.role === 'pr') return [1];
+    if (u.role === 'secretary') return [2];
+    if (u.role === 'deputy') return [BASE(u.group)];
+    if (u.role === 'member') return [BASE(u.group) + 1];
+    return [];
+  }
+  if (u.role === 'president') return Array.from({ length: 97 }, (_, i) => i + 2);
+  if (u.role === 'pr') return CONFIG.DEPTS.map((_, i) => BASE(i));
+  if (u.role === 'secretary') return [BASE(u.group) + 1];
+  if (u.role === 'deputy') return Array.from({ length: 10 }, (_, i) => BASE(u.group) + 2 + i);
+  return [];
+}
+
+function composeView(){
+  const kind = state.kind;
+  const receivers = availableTargets(kind);
+  if (!receivers.length) return shellHeader() + `<div class="empty">این نقش امکان ارسال ${kind === 'report' ? 'گزارش' : 'ابلاغیه'} ندارد.</div>`;
+  const target = state.forward ? receivers[0] : receivers[0];
+  const f = state.forward;
+  return shellHeader() + `<h2>${kind === 'report' ? '✍️ نوشتن گزارش' : '📢 صدور ابلاغیه'}</h2>${notice()}
+    <form id="compose-form" class="card">
+      <div class="field"><label>گیرنده</label>
+        <select name="receiver" required>${receivers.map(c => `<option value="${c}" ${c===Number(target)?'selected':''}>${esc(name(c))}</option>`).join('')}</select>
+      </div>
+      <div class="field"><label>عنوان</label><input name="title" required maxlength="250" value="${esc(f ? 'ارجاع: ' + f.title : '')}"></div>
+      <div class="field"><label>متن ${kind === 'report' ? 'گزارش' : 'ابلاغیه'}</label><textarea name="body" required>${esc(f ? `گزارش ارجاعی از ${name(f.sender_code)}:\n\n${f.body}` : '')}</textarea></div>
+      <div class="field"><label>لینک‌ها (هر خط یک لینک)</label><textarea name="links" style="min-height:90px">${esc(f ? (f.links||[]).join('\n') : '')}</textarea></div>
+      <div class="field"><label>پیوست فایل (حداکثر ۲۵MB هر فایل)</label><input type="file" name="files" multiple></div>
+      <button class="btn block" type="submit">${kind === 'report' ? 'ارسال گزارش' : 'ارسال ابلاغیه'}</button>
+    </form>`;
+}
+
+function projectsView(){
+  const items = state.projects;
+  return shellHeader() + `<div class="bar" style="margin-bottom:12px"><h2 style="margin:0">🗂 پروژه‌ها</h2><button class="btn tiny" data-action="new-project" style="margin-right:auto">+ پروژه جدید</button></div>
+    ${notice()}
+    ${items.length ? items.map(p => projectCard(p)).join('') : `<div class="empty">هنوز پروژه‌ای ثبت نشده است.</div>`}`;
+}
+
+function projectCard(p){
+  const statusChip = p.status === 'تکمیل شده' ? 'good' : p.status === 'متوقف شده' ? 'danger' : 'warn';
+  const progress = p.progress ?? (p.status === 'تکمیل شده' ? 100 : p.status === 'در حال انجام' ? 50 : 10);
+  return `<article class="card" data-project-id="${p.id}">
+    <div class="msg-head"><h3>${esc(p.title)}</h3><span class="chip ${statusChip}">${esc(p.status || 'ابلاغ شده')}</span></div>
+    <div class="meta">مسئول: ${esc(name(p.assigned_to))} · دبیرخانه: ${esc(p.department || '—')}${p.due_date ? ' · مهلت: ' + esc(p.due_date) : ''}</div>
+    <div class="msg-body">${esc(p.description)}</div>
+    <div class="progress"><i style="width:${Number(progress)}%"></i></div>
+    <div class="actions">
+      <select class="select" data-project-status="${p.id}" aria-label="وضعیت پروژه">
+        ${['ابلاغ شده','در حال انجام','تکمیل شده','متوقف شده'].map(s => `<option ${p.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <button class="btn tiny" data-action="save-project" data-id="${p.id}">ذخیره</button>
+      <button class="btn ghost tiny" data-action="project-timeline" data-id="${p.id}">تاریخچه</button>
+    </div>
+  </article>`;
+}
+
+function projectFormView(){
+  return shellHeader() + `<h2>پروژه جدید</h2>${notice()}
+    <form id="project-form" class="card">
+      <div class="field"><label>عنوان</label><input name="title" required maxlength="250"></div>
+      <div class="field"><label>مسئول</label>
+        <select name="assigned">${Array.from({ length:97 }, (_,i) => i + 2).map(c => `<option value="${c}">${esc(name(c))}</option>`).join('')}</select>
+      </div>
+      <div class="field"><label>شرح پروژه</label><textarea name="description" required></textarea></div>
+      <div class="field"><label>مهلت (اختیاری)</label><input type="date" name="due"></div>
+      <button class="btn block" type="submit">ثبت پروژه و ارسال ابلاغ</button>
+    </form>`;
+}
+
+function unitsView(){
+  return shellHeader() + `<h2>🏛 ساختار سازمان</h2>` + CONFIG.DEPTS.map((d,i) => `<section class="card">
+    <h3>${esc(d)}</h3>
+    <div class="meta">دبیر: ${BASE(i)} · معاون: ${BASE(i)+1} · اعضا: ${BASE(i)+2} تا ${BASE(i)+11}</div>
+    <div class="kv"><span>دبیر</span><span>${esc(name(BASE(i)))}</span></div>
+    <div class="kv"><span>معاون</span><span>${esc(name(BASE(i)+1))}</span></div>
+  </section>`).join('');
+}
+
+function shellHeader(){
+  return `<div class="topbar">
+    <div class="brand"><div class="logo">X4</div><div><b>DABIRAN X4</b><small>${esc(state.me?.label || '')}</small></div></div>
+    <div class="bar">
+      <button class="btn ghost tiny" data-action="home">خانه</button>
+      <button class="btn ghost tiny" data-action="theme" title="تغییر تم">${state.theme === 'light' ? '🌙' : '☀️'}</button>
+      <button class="btn ghost tiny" data-action="refresh">↻</button>
+      <button class="btn ghost tiny" data-action="exit">خروج</button>
+    </div>
+  </div>`;
+}
+
+/* ========== RENDER ========== */
+function render(){
+  applyTheme();
+  if (!state.me){ app.innerHTML = loginView(); return; }
+  const map = { home: homeView, messages: () => shellHeader() + messagesView(false), compose: composeView, projects: projectsView, 'new-project': projectFormView, units: unitsView };
+  app.innerHTML = (map[state.page] || homeView)();
+}
+
+/* ========== ACTIONS ========== */
+async function uploadFiles(files){
+  const out = [];
+  for (const file of files){
+    if (file.size > CONFIG.MAX_FILE) throw new Error('فایل بزرگ‌تر از ۲۵ مگابایت: ' + file.name);
+    const ext = (file.name.split('.').pop() || 'bin').replace(/[^a-zA-Z0-9]/g, '').slice(0, 12);
+    const path = `${state.me.code}/${uid()}${ext ? '.' + ext : ''}`;
+    const url = CONFIG.DB + '/storage/v1/object/' + CONFIG.BUCKET + '/' + path;
+    const res = await fetch(url, { method:'POST', headers:{ apikey: CONFIG.KEY, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert':'false' }, body: file });
+    if (!res.ok) throw new Error('آپلود ' + file.name + ': HTTP ' + res.status);
+    out.push('sb://' + path);
+  }
+  return out;
+}
+
+async function sendMessage(form){
+  if (state.busy) return;
+  state.busy = true;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'در حال ارسال…';
+  try {
+    const to = Number(form.elements.receiver.value);
+    const title = form.elements.title.value.trim();
+    const body = form.elements.body.value.trim();
+    if (!title || !body) throw new Error('عنوان و متن الزامی است.');
+    const links = form.elements.links.value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+    for (const l of links) if (!validUrl(l)) throw new Error('لینک نامعتبر: ' + l);
+    const added = await uploadFiles([...form.elements.files.files]);
+    const attachments = [...(state.forward?.attachments || []), ...added];
+    await insert('messages', {
+      sender_code: state.me.code, receiver_code: to, kind: state.kind,
+      title, body, links, attachments, parent_id: state.forward?.id || null
+    });
+    state.forward = null;
+    state.page = 'home';
+    setMsg('پیام با موفقیت ارسال شد.');
+    await loadAll(false);
+  } catch (e){
+    setMsg('ارسال ناموفق: ' + (e.message || e), true);
+    btn.disabled = false; btn.textContent = state.kind === 'report' ? 'ارسال گزارش' : 'ارسال ابلاغیه';
+  } finally { state.busy = false; }
+}
+
+async function createProject(form){
+  if (state.busy) return;
+  state.busy = true;
+  try {
+    const to = Number(form.elements.assigned.value);
+    const title = form.elements.title.value.trim();
+    const description = form.elements.description.value.trim();
+    await insert('projects', {
+      title, description, created_by: state.me.code, assigned_to: to,
+      department: who(to)?.dept || 'مرکزی', due_date: form.elements.due.value || null, status: 'ابلاغ شده'
+    });
+    await insert('messages', {
+      sender_code: state.me.code, receiver_code: to, kind: 'directive',
+      title: 'پروژه: ' + title, body: description, links: [], attachments: []
+    });
+    state.page = 'projects';
+    setMsg('پروژه ثبت و ابلاغ شد.');
+    await loadAll(false);
+  } catch (e){ setMsg('خطا در ثبت پروژه: ' + (e.message || e), true); }
+  finally { state.busy = false; }
+}
+
+/* ========== EVENTS ========== */
+app.addEventListener('submit', e => {
+  e.preventDefault();
+  const form = e.target;
+  if (form.id === 'login-form'){
+    const code = Number(enNum(form.elements.code.value).trim());
+    const pin = enNum(form.elements.pin.value).trim();
+    authenticate(code, pin).then(me => {
+      state.me = me; saveSession(me); state.page = 'home';
+      setMsg('خوش آمدید، ' + me.label);
+      render();
+      loadAll(false);
+      startPolling();
+    }).catch(err => setMsg(err.message, true));
+  } else if (form.id === 'compose-form') sendMessage(form);
+  else if (form.id === 'project-form') createProject(form);
+});
+
+app.addEventListener('click', async e => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn || state.busy) return;
+  const action = btn.dataset.action;
+  try {
+    if (action === 'exit'){ stopPolling(); state.me = null; clearSession(); state.messages = []; state.projects = []; render(); return; }
+    if (action === 'theme'){ toggleTheme(); render(); return; }
+    if (action === 'refresh'){ await loadAll(true); return; }
+    if (action === 'home'){ state.page = 'home'; render(); return; }
+    if (action === 'box'){ state.box = btn.dataset.box; state.page = 'messages'; render(); return; }
+    if (action === 'compose'){ state.kind = btn.dataset.kind || 'report'; state.forward = null; state.page = 'compose'; render(); return; }
+    if (action === 'projects'){ state.page = 'projects'; await loadAll(false); return; }
+    if (action === 'new-project'){ state.page = 'new-project'; render(); return; }
+    if (action === 'units'){ state.page = 'units'; render(); return; }
+    if (action === 'read'){
+      await patch('messages', { id: 'eq.' + btn.dataset.id, receiver_code: 'eq.' + state.me.code }, { read_at: new Date().toISOString() });
+      setMsg('دریافت تأیید شد.');
+      await loadAll(false);
+      return;
+    }
+    if (action === 'forward'){
+      const m = state.messages.find(x => x.id === Number(btn.dataset.id));
+      if (!m) return;
+      state.forward = m; state.kind = 'report'; state.page = 'compose'; render(); return;
+    }
+    if (action === 'save-project'){
+      const sel = app.querySelector(`[data-project-status="${btn.dataset.id}"]`);
+      await patch('projects', { id: 'eq.' + btn.dataset.id }, { status: sel.value });
+      setMsg('وضعیت پروژه ذخیره شد.');
+      await loadAll(false);
+      return;
+    }
+    if (action === 'project-timeline'){
+      const p = state.projects.find(x => String(x.id) === String(btn.dataset.id));
+      openModal(`<h3>${esc(p.title)}</h3><p class="meta">مسئول: ${esc(name(p.assigned_to))}</p><ul class="timeline"><li>ثبت پروژه توسط ${esc(name(p.created_by))}</li><li>وضعیت فعلی: ${esc(p.status)}</li>${p.due_date ? `<li>مهلت: ${esc(p.due_date)}</li>` : ''}</ul>`);
+      return;
+    }
+  } catch (err){ setMsg(err.message || String(err), true); }
+});
+
+app.addEventListener('input', e => {
+  if (e.target.matches('[data-filter="search"]')){
+    state.filter.search = e.target.value;
+    const list = app.querySelector('#message-list');
+    if (list) list.innerHTML = messagesView(false).replace(/^([\s\S]*?)(?=<article|$)/, '');
+  }
+});
+app.addEventListener('change', e => {
+  if (e.target.matches('[data-filter="dept"]')){ state.filter.dept = e.target.value; render(); }
+  if (e.target.matches('[data-filter="kind"]')){ state.kind = e.target.value; render(); }
+});
+
+/* ========== MODAL ========== */
+function openModal(html){
+  modalRoot.innerHTML = `<div class="modal-back"><div class="modal" role="dialog" aria-modal="true">${html}<div class="actions"><button class="btn ghost" data-close-modal>بستن</button></div></div></div>`;
+}
+modalRoot.addEventListener('click', e => {
+  if (e.target.matches('[data-close-modal]') || e.target.classList.contains('modal-back')) modalRoot.innerHTML = '';
+});
+
+/* ========== POLLING ========== */
+function startPolling(){
+  stopPolling();
+  state.poll = setInterval(() => {
+    if (document.visibilityState === 'visible' && !state.busy && state.me && ['home','messages','projects'].includes(state.page)) loadAll(false);
+  }, CONFIG.POLL_MS);
+}
+function stopPolling(){ if (state.poll) clearInterval(state.poll); state.poll = null; }
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && state.me && !state.busy) loadAll(false);
+});
+
+/* ========== BOOT ========== */
+(function boot(){
+  const me = loadSession();
+  if (me){
+    state.me = me;
+    render();
+    loadAll(false);
+    startPolling();
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>
